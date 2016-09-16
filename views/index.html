@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+
+  <meta charset='utf-8'>
+  <meta name='description' content=''>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, shrink-to-fit=no'>
+
+  <!-- *TODO: TITLE NEEDS TO BE CUSTOMIZED BY ADMIN -->
+  <title>VRC | Virtual Roll Call</title>
+
+  <!-- STYLE SHEETS -->
+  <link href='style/normalize.css' rel='stylesheet' media='all'>
+  <link href='style/styles.css' rel='stylesheet' media='all'>
+  <!--[if lt IE 9]><script src='vendor/html5shiv-printshiv.js' media='all'></script><![endif]-->
+
+  <!-- SCRIPTS -->
+  <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js'></script>
+  <script src='../app/app.js' type='text/javascript'></script>
+  <script src='../app/controllers/login-ctrl.js' type='text/javascript'></script>
+  <script src='../app/services/data-service.js' type='text/javascript'></script>
+
+</head>
+
+<!-- associating app to root element -->
+<body ng-app='login'>
+
+  <header role='banner'>
+    <h1>Login Page</h1>
+    <nav role='navigation'>
+    </nav>
+  </header>
+
+  <div class='wrap'>
+    <!-- associating controller to main element -->
+    <main ng-controller='loginCtrl' role='main'>
+      <div class='form-login'>
+        <form>
+          <label>Username:</label>
+          <!-- bind username/password values in the input to the scope -->
+          <input ng-model='username' type='text' name='' required>
+          <label>Password:</label>
+          <input ng-model='password'type='password' name='' required>
+          <!-- call login function in controller when clicked -->
+          <button ng-click='login()'>Login</button>
+        </form>
+      </div>
+      <!-- display error message if login credentials are incorrect -->
+      <p ng-show='loginError'>{{message}}</p>
+    </main>
+  </div>
+</body>
+</html>
