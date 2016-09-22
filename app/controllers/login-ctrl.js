@@ -12,14 +12,14 @@ loginModule.controller('loginCtrl', ['$scope', 'dataService', '$window', functio
       username = $scope.username;
       password = $scope.password;
 
-      //authenticate user
-      dataService.login(username, password)
-      .then(
+      if(username != null && password != null) {
+
+        //authenticate user
+        dataService.login(username, password)
+        .then(
 
           //http post request succeeded 
           function(data){
-
-            console.log(data["username"]);
 
               //if username/password found in the database
               if(data['username'] && data['password'] && (data['password'] === password)){
@@ -41,6 +41,9 @@ loginModule.controller('loginCtrl', ['$scope', 'dataService', '$window', functio
             console.log('Error: ' + error);
           }
           );          
-    };
+      };
+
+    }
+
 
   }]);
