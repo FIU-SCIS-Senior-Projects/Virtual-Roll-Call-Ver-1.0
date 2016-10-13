@@ -1,0 +1,92 @@
+   body {
+
+   }
+   /* Default link styling */
+   a:link { color:#0271fb; }
+   a:visited { color:#bd02fb; }
+   a:hover, a:focus { color:#000; }
+   a:active { color:#fb0e02; }
+
+
+/* ---------------------------------------------------------
+   Author's styles
+   ---------------------------------------------------------*/
+
+   img {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .fields{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    box-sizing: border-box;
+  }
+
+  .form{
+    margin: auto;
+    width: 45%;
+    border: 3px solid gold;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+  }
+
+  body {
+    background-color:rgb(0,0,115);
+  }
+
+  h1{
+    text-align:center;
+    color: white;
+  }
+  .submit{
+    background-color: blue;
+    font-size: 20px;
+    color: white;
+    margin: auto;
+    width: 100%;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+    
+    
+  }
+
+/* ---------------------------------------------------------
+   Print styles
+   ---------------------------------------------------------*/
+   @media print {
+    * {
+      color:#000 !important;
+      box-shadow:none !important;
+      text-shadow:none !important;
+      background:transparent !important;
+    }
+    html { background-color:#fff; }
+    /* Hide navigation */
+    nav { display:none; }
+
+    /* Show link destinations in brackets after the link text */
+    a[href]:after { content: " (" attr(href) ") "; }
+    a[href] {
+      font-weight:bold;
+      text-decoration:underline;
+      color:#06c;
+      border:none;
+    }
+    /* Don't show link destinations for JavaScript or internal links */ 
+    a[href^="javascript:"]:after, a[href^="#"]:after { content:""; }
+    
+    /* Show abbr title value in brackets after the text */
+    abbr[title]:after { content: " (" attr(title) ")"; }
+
+    figure { 
+      margin-bottom:1em; 
+      overflow:hidden;
+    }
+
+    figure img { border:1px solid #000; }
+  }
