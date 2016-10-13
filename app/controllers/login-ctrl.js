@@ -1,16 +1,12 @@
-//CONTROLLER for login app
-loginModule.controller('loginCtrl', ['$scope', 'dataService', '$window', function($scope, dataService, $window) {
-
-  //initialize username, password, and loginerror
-  var username = '';
-  var password = '';
+//CONTROLLER for login
+loginModule.controller('loginCtrl', ['$scope', '$cookies', 'localStorageService', 'dataService', '$window', function($scope, $cookies, localStorageService, dataService, $window) {
 
   //when login button is clicked...
   $scope.login = function(){
 
       //get values from the login input fields
-      username = $scope.username;
-      password = $scope.password;
+      var username = $scope.username;
+      var password = $scope.password;
 
       if(username != null && password != null) {
 
@@ -22,11 +18,13 @@ loginModule.controller('loginCtrl', ['$scope', 'dataService', '$window', functio
           function(data){
 
               //if username/password found in the database
-              if(data['username'] && data['password'] && (data['password'] === password)){
-
+              if(data['Username'] && data['Password']){
+                localStorageService.set('id', data['userID']);
+                localStorageService.set('fname', data['First_Name']);
+                localStorageService.set('lname', data['Last_Name']);
               //start session and route accordingly
               //username and role are passed to session.php in query string
-              $window.location.href = '../app/php/session.php?username=' + data['username'] + '&role=' + data['role'];
+              $window.location.href = '../app/php/session.php?id=' + data['userID'] + '&name=' + data['First_Name'] + '&role=' + data['Role'];
 
             }
             else{
@@ -40,10 +38,7 @@ loginModule.controller('loginCtrl', ['$scope', 'dataService', '$window', functio
           function(error){
             console.log('Error: ' + error);
           }
-          );          
+        );          
       };
-
     }
-
-
-  }]);
+}]);
