@@ -76,6 +76,69 @@ adminModule.factory('dataService', function($http, $q){
     },
 
     //promise that returns an http response object
+    getUser: function(username){
+
+      //$q helps functions run asynchronously; will return response of http post request when it completes
+      return $q(function(resolve, reject){
+
+        $http.post('../php/get-user.php', {'username': username})
+        .then(
+
+          //return response data if it succeeds
+          function(response){
+            resolve(response.data);
+          },
+
+          //otherwise return response error
+          function(error){
+            reject(error);
+          });
+      });
+    },
+
+    //promise that returns an http response object
+    updateUser: function(id, fname, lname, username, role){
+
+      //$q helps functions run asynchronously; will return response of http post request when it completes
+      return $q(function(resolve, reject){
+
+        $http.post('../php/edit-user.php', {'id': id, 'fName': fname, 'lName': lname, 'username': username, 'role': role})
+        .then(
+
+          //return response data if it succeeds
+          function(response){
+            resolve(response.data);
+          },
+
+          //otherwise return response error
+          function(error){
+            reject(error);
+          });
+      });
+    },
+
+    //promise that returns an http response object
+    removeUser: function(id){
+
+      //$q helps functions run asynchronously; will return response of http post request when it completes
+      return $q(function(resolve, reject){
+
+        $http.post('../php/remove-user.php', {'id': id})
+        .then(
+
+          //return response data if it succeeds
+          function(response){
+            resolve(response.data);
+          },
+
+          //otherwise return response error
+          function(error){
+            reject(error);
+          });
+      });
+    },
+
+    //promise that returns an http response object
     getOfficers: function(){
 
       //$q helps functions run asynchronously; will return response of http post request when it completes

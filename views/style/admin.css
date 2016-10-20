@@ -51,6 +51,19 @@
     width: 15%;
   }
   
+  .editbutton {
+    background-color: #222222; 
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  
   th {
     background-color: #4CAF50;
     color: white;
@@ -84,6 +97,16 @@
 
   li.a:last-child {
     border-bottom: none;
+  }
+  
+  .modal-header, h4, .close {
+      background-color: #337AB7;
+      color:white !important;
+      text-align: center;
+      font-size: 30px;
+  }
+  .modal-footer {
+      background-color: #f9f9f9;
   }
 
 

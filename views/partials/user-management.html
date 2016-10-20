@@ -7,6 +7,8 @@
 		<div class='panel-heading'>Add User</div>
 		<div class='panel-body'>
 			<div>
+
+				<!-- Add User Form -->
 				<form ng-submit='addUser()'>
 					<label>First Name</label>
 					<br>
@@ -40,10 +42,12 @@
 					<button type='submit' class='btn btn-success'>Add User</button>
 					<br>
 					<br>
-					<div class='alert alert-danger' ng-show='errorMessage'>
+
+					<!-- display message accordingly -->
+					<div class='alert alert-danger' ng-show='errorMessage' style='margin-bottom: 0'>
 						{{message}}
 					</div>
-					<div class='alert alert-success' ng-show='successMessage'>
+					<div class='alert alert-success' ng-show='successMessage' style='margin-bottom: 0'>
 						{{message}}
 					</div>
 				</form>
@@ -54,9 +58,17 @@
 	<!-- Edit User Panel -->
 	<div class='panel panel-primary' ng-init='getOfficers()'>
 		<div class='panel-heading'>Edit User</div>
-		<div class='panel-body'>
+
+		<!-- TO DO: Overflow not detected until page reloads -->
+		<div class='panel-body' style="height:350px; overflow-y:scroll">
 			<div>
-				<table class='table table-hover table-bordered' style='margin:auto; width:100%'>        
+				<table class='table table-hover table-bordered' style='margin:auto; width:100%'>
+					<form class="form-inline">
+						<div class="form-group">
+							<label>Search</label>
+							<input type="text" ng-model="search" class="form-control" placeholder="Search">
+						</div>
+					</form>      
 					<thead>
 						<tr>
 							<th></th>
@@ -64,22 +76,72 @@
 							<th>Last Name</th>
 							<th>Username</th>
 							<th>Role</th>
-							<th class='text-center'>Edit</th>
+							<th class="text-center">Edit</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat='o in officers'>
+						<tr ng-repeat='o in officers|filter:search'>
 							<td class='text-center'>{{$index + 1}}</td>
 							<td>{{o.firstName}}</td>
 							<td>{{o.lastName}}</td>
 							<td>{{o.username}}</td>
 							<td>{{o.role}}</td>
-							<td class='text-center'><button class='btn btn-link'>Edit</button></td>
-							<!-- <td class='text-center'><span class="glyphicon glyphicon-edit"></span></td> -->
-							<!-- <td class='text-center'><span class="glyphicon glyphicon-remove"></span></td> -->
+							<td class='text-center'><button class="editbutton" ng-click='editUser(o.id, o.firstName, o.lastName, o.username, o.role)'><span class="glyphicon glyphicon-edit"></span> Edit</button></td>
+						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
+	
+	<!-- Edit User Modal -->
+	<div class="modal fade" id="editModal" role="dialog">
+		<div class="modal-dialog">
+			
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header" style="padding:15px 15px;">
+					<button type="button" class="close" data-dismiss="modal" ng-click='updateErrorMessage = updateSuccessMessage = false'>&times;</button>
+					<h4><span class="glyphicon glyphicon-pencil"></span> Edit User</h4>
+				</div>
+				<div class="modal-body" style="padding:40px 50px;">
+					<button ng-click='removeUser()' class="btn btn-danger pull-right"><span class="glyphicon glyphicon-remove"></span> Delete User</button>
+					<br>
+					<br>
+					<form role="form" ng-submit='updateUser()'>
+						<div class="form-group">
+							<label>First Name</label>
+							<input type="text" class="form-control" ng-model='updateFirst' required>
+						</div>
+						<div class="form-group">
+							<label>Last Name</label>
+							<input type="text" class="form-control" ng-model='updateLast' required>
+						</div>
+						<div class="form-group">
+							<label>Username</label>
+							<input type="text" class="form-control" ng-model='updateUsername' required>
+						</div>
+						<div class="form-group">
+							<label>Role</label>
+							<select ng-model='updateRole' class="form-control">
+								<option value='Officer'>Officer</option>
+								<option value='Supervisor'>Supervisor</option>
+								<option value='Administrator'>Administrator</option>
+							</select>
+						</div>
+						<br>
+						<!-- TO DO: Don't show successful update message when no changes were made to the user -->
+						<button type="submit" class="btn btn-success btn-block">Update</button>
+						<br>
+						<div class='alert alert-danger' ng-show='updateErrorMessage'>
+							{{updateMessage}}
+						</div>
+						<div class='alert alert-success' ng-show='updateSuccessMessage'>
+							{{updateMessage}}
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div> 	
 </div>
