@@ -17,43 +17,35 @@
     margin: 0 auto;
   }
 
-  .fields{
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    box-sizing: border-box;
+  .panel-heading
+   {
+      color:white !important;
+      text-align: center;
+      font-size: 30px;
   }
-
-  .form{
-    margin: auto;
-    width: 45%;
-    border: 3px solid gold;
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
+  .panel-footer 
+  {
+      background-color: #f9f9f9;
   }
-
-  body {
-    background-color:rgb(0,0,115);
-  }
-
-  h1{
-    text-align:center;
-    color: white;
-  }
-  .submit{
-    background-color: blue;
-    font-size: 20px;
-    color: white;
-    margin: auto;
-    width: 100%;
-    cursor: pointer;
+  
+  .button {
+    background-color: #4CAF50; /* Green */
     border: none;
+    color: white;
+    padding: 10px 10px;
     text-align: center;
-    
-    
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 4px;
   }
+  
+   header{
+      background-color: #222222;
+      color: white;
+    }
 
 /* ---------------------------------------------------------
    Print styles

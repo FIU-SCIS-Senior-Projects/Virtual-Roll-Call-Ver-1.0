@@ -62,8 +62,8 @@
     <div class='row content'>
       <div class='col-sm-2 sidenav'>
         <ul class='a'>
-          <li class='a'><a class='active' href='#reset'>Reset Password</a></li>
-          <li class='a'><a href='#'>Manage Documents</a></li>
+          <li class='a'><a class='active' href='#'>Manage Documents</a></li>
+          <li class='a'><a href='#reset'>Reset Password</a></li>
         </ul>
       </div>
       

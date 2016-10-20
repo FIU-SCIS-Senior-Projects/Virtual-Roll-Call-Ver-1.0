@@ -1,12 +1,14 @@
 <?php
 
+//TO DO: Notify admin when a username already exists in the db
+
 class DBHandler{
 
 	//Must be updated to match production environment
 	function __construct(){
 		global $db_connection;
-		$un = 'root';
-		$pw = 'VirtualRollCall';
+		$un = 'vrc';
+		$pw = 'admin123';
 		$dbName = 'VIRTUAL_ROLL_CALL';
 		$address = 'localhost';
 		$db_connection = new mysqli($address, $un, $pw, $dbName);
@@ -18,27 +20,89 @@ class DBHandler{
 
 	}
 
-	function addUser($first_name, $last_name, $email, $password, $role) {
+  //ADD NEW USER TO DATABASE
+	function addUser($first_name, $last_name, $username, $password, $role) {
+		global $db_connection;
+		$result = ['Added' => false,'Username' => $username];
+		$sql = "INSERT INTO OFFICERS (First_Name, Last_Name, Username, Password, Role) VALUES (?,?,?,?,?)"; 
+		$stmt = $db_connection->prepare($sql);
+		if (!$stmt->bind_param('sssss', $first_name, $last_name, $username, $password, $role)){
+			echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+		}
+		if (!$stmt->execute()){
+			return $result;
+		}
+    $result['Added'] = true;
+		$stmt->close();
+		$db_connection->close();
+		return $result;
+	}
+  
+  // RETRIEVE USER 
+  function getUser($username){
+    global $db_connection;
+    $result = ['userID' => NULL, 'First_Name' => NULL, 'Last_Name' => NULL, 'Username' => NULL, 'Role' => NULL];
+    $sql = 'SELECT userID, First_Name, Last_Name, Username, Role FROM OFFICERS WHERE Username=?';
+    $stmt = $db_connection->prepare($sql);
+    $stmt->bind_param('s', $username);
+    $stmt->execute();
+    $stmt->bind_result($result['userID'], $result['First_Name'], $result['Last_Name'], $result['Username'], $result['Role']);
+    if (!$stmt->fetch()){
+      return $result;
+    }
+    $stmt->close();
+    $db_connection->close();
+    return $result;
+  }
+
+	function editUser($id, $first_name, $last_name, $username, $role) {
 
 		global $db_connection;
 
-		$result = ["Added" => false];
+		$result = ["Updated" => false];
 		$table = "OFFICERS";
-		$sql = "INSERT INTO $table (First_Name, Last_Name, Username, Password, Role) VALUES (?,?,?,?,?)"; 
+		$sql = "UPDATE $table SET First_Name=?, Last_Name=?, Username=?, Role=?
+		        WHERE userID=?";
 
 		$stmt = $db_connection->prepare($sql);
-		
-		if (!$stmt->bind_param('sssss', $first_name, $last_name, $email, $password, $role) ) 
+		if( !$stmt->bind_param('ssssd', $first_name, $last_name, $username, $role, $id) )
 		{
-			echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+			return $result;
 		}
-
 		if (!$stmt->execute()) 
 		{
 			return $result;
 		}
 
-		$result["Added"] = true;
+		$result["Updated"] = true;
+
+		$stmt->close();
+
+		$db_connection->close();
+
+		return $result;
+	}
+	
+	function removeUser($id) {
+
+		global $db_connection;
+
+		$result = ["Removed" => false];
+		$table = "OFFICERS";
+		$sql = "DELETE FROM $table
+		        WHERE userID=?";
+
+		$stmt = $db_connection->prepare($sql);
+		if( !$stmt->bind_param('d', $id) )
+		{
+			return $result;
+		}
+		if (!$stmt->execute()) 
+		{
+			return $result;
+		}
+
+		$result["Removed"] = true;
 
 		$stmt->close();
 
