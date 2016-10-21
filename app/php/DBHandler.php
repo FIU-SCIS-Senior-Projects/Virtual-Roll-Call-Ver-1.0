@@ -7,8 +7,8 @@ class DBHandler{
 	//Must be updated to match production environment
 	function __construct(){
 		global $db_connection;
-		$un = 'vrc';
-		$pw = 'admin123';
+		$un = 'root';
+		$pw = 'VirtualRollCall';
 		$dbName = 'VIRTUAL_ROLL_CALL';
 		$address = 'localhost';
 		$db_connection = new mysqli($address, $un, $pw, $dbName);
