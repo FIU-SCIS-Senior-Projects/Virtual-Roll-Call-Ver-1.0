@@ -1,6 +1,7 @@
+var sharedModule = angular.module('shared', ['admin', 'supervisor', 'login']);
 var loginModule = angular.module('login', ['ngCookies', 'LocalStorageModule']);
-var adminModule = angular.module('admin', ['ngRoute', 'ngCookies', 'LocalStorageModule']);
-var supervisorModule = angular.module('supervisor', ['ngRoute', 'ngCookies', 'LocalStorageModule']);
+var adminModule = angular.module('admin', ['ngRoute', 'ngCookies', 'LocalStorageModule', 'shared']);
+var supervisorModule = angular.module('supervisor', ['ngRoute', 'ngCookies', 'LocalStorageModule','shared']);
 
 adminModule.config(function($routeProvider){
 	$routeProvider
@@ -14,7 +15,7 @@ adminModule.config(function($routeProvider){
 	})
 	.when('/password', {
 		templateUrl: '../../views/partials/change-password.html',
-		controller: 'adminCtrl'
+		controller: 'sharedCtrl'
 	})
 	.when('/reporting', {
 		templateUrl: '../../views/partials/reporting.html',
@@ -27,15 +28,19 @@ adminModule.config(function($routeProvider){
 
 supervisorModule.config(function($routeProvider){
 	$routeProvider
+	.when('/upload', {
+		templateUrl: '../../views/partials/manage-documents.html',
+		controller: 'supervisorCtrl'
+	})
 	.when('/reset', {
 		templateUrl: '../../views/partials/reset-password.html',
 		controller: 'supervisorCtrl'
 	})
 	.when('/password', {
 		templateUrl: '../../views/partials/change-password.html',
-		controller: 'supervisorCtrl'
+		controller: 'sharedCtrl'
 	})
 	.otherwise({
-		redirectTo: '/reset'
+		redirectTo: '/upload'
 	});
 });

@@ -1,0 +1,37 @@
+<div class='col-sm-8 text-left'> 
+	<h3>Manage Documents</h3>
+	<hr>
+
+	<!-- Upload Document Panel -->
+	<div class='panel panel-primary' ng-init='getCategories()'>
+		<div class='panel-heading'>Upload Documents</div>
+		<div class='panel-body'>
+			<div>
+
+				<!-- Add User Form -->
+				<form ng-submit='uploadDocument()' enctype="multipart/form-data">
+					<label><span class="glyphicon glyphicon-file"></span>File Name</label><br>
+					<input type="file" ng-model='fileName' required>
+					<br>
+					<br>
+					<label><span class="glyphicon glyphicon-list-alt"></span> Category</label><br>
+					<select ng-model='category' ng-options="c.name for c in categories">
+					</select>
+					<br>
+					<br>
+					<button type='submit' class='btn btn-success'><span class="glyphicon glyphicon-upload"></span> Upload</button>
+					<br>
+					<br>
+
+					<!-- display message accordingly -->
+					<div class='alert alert-danger' ng-show='errorMessage' style='margin-bottom: 0'>
+						{{message}}
+					</div>
+					<div class='alert alert-success' ng-show='successMessage' style='margin-bottom: 0'>
+						{{message}}
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

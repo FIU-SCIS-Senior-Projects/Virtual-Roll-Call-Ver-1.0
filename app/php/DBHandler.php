@@ -17,7 +17,6 @@ class DBHandler{
 			die('Unable to connect to database[' . $db_connection->connect_error . ']');
 		}
 
-
 	}
 
   //ADD NEW USER TO DATABASE
@@ -213,6 +212,62 @@ class DBHandler{
 
 		return $officers;
 	}
+    
+    //GET ALL CATEGORIES FROM THE DATABASE
+	function getCategories(){
+		global $db_connection;
+		$categories = [];
+		$sql = 'SELECT category_id, Category_Name FROM CATEGORIES';
+		$stmt = $db_connection->prepare($sql);
+		$stmt->execute();
+		$stmt->bind_result($id, $name);
+		while($stmt->fetch()){
+			$tmp = ["id" => $id,
+			"name" => $name];
+			array_push($categories, $tmp);
+		}
+		$stmt->close();
+		$db_connection->close();
+		return $categories;
+	}
+
+	//ADD NEW CATEGORY TO DATABASE
+	function addCategory($name) {
+		global $db_connection;
+		$result = ['Added' => false,'name' => $name];
+		$sql = "INSERT INTO CATEGORIES (Category_Name) VALUES (?)"; 
+		$stmt = $db_connection->prepare($sql);
+		if (!$stmt->bind_param('s', $name)){
+			echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+		}
+		if (!$stmt->execute()){
+			return $result;
+		}
+        $result['Added'] = true;
+		$stmt->close();
+		$db_connection->close();
+		return $result;
+	}
+
+	function updateCategory($cat_id, $cat_name) {
+		global $db_connection;
+		$result = ["Updated" => false];
+		$sql = "UPDATE CATEGORIES SET Category_Name=? WHERE category_id=?";
+		$stmt = $db_connection->prepare($sql);
+		if( !$stmt->bind_param('sd', $cat_name, $cat_id)){
+			return $result;
+		}
+		if (!$stmt->execute()){
+			return $result;
+		}
+		$result["Updated"] = true;
+		$stmt->close();
+		$db_connection->close();
+		return $result;
+	}
+
+
+
 
 	function resetPassword($id, $reset_pw){
 

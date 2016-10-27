@@ -21,11 +21,12 @@
   <script src='../../app/vendor/angular-cookies.min.js'></script>
   <script src='../../app/vendor/angular-local-storage.min.js'></script>
   <script src='../../app/app.js' type='text/javascript'></script>
+  <script src='../../app/controllers/shared-ctrl.js' type='text/javascript'></script>
   <script src='../../app/controllers/supervisor-ctrl.js' type='text/javascript'></script>
   <script src='../../app/services/data-service.js' type='text/javascript'></script>
 
 </head>
-<body ng-controller ='supervisorCtrl'>
+<body ng-controller = 'supervisorCtrl' ng-controller = 'sharedCtrl'>
 
   <!-- Vertical Navigation -->
   <nav class='navbar navbar-inverse'>
@@ -41,7 +42,7 @@
       <div class='collapse navbar-collapse' id='myNavbar'>
         <ul class='nav navbar-nav navbar-right'>
           <li class='dropdown'>
-            <a href='#' class='dropdown-toggle' data-toggle='dropdown'>{{name}} <b class='caret'></b></a>
+            <a class='dropdown-toggle' data-toggle='dropdown'>{{name}} <b class='caret'></b></a>
             <ul class='dropdown-menu'>
               <li>
                 <a href='#password'><span class='glyphicon glyphicon-cog'></span> Change Password</a>
@@ -62,7 +63,7 @@
     <div class='row content'>
       <div class='col-sm-2 sidenav'>
         <ul class='a'>
-          <li class='a'><a class='active' href='#'>Manage Documents</a></li>
+          <li class='a'><a class='active' href='#upload'>Manage Documents</a></li>
           <li class='a'><a href='#reset'>Reset Password</a></li>
         </ul>
       </div>

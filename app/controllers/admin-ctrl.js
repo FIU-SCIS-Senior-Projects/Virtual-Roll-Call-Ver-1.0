@@ -161,72 +161,114 @@ $scope.name = fname + ' ' + lname;
     });};
 
 
-/*******************
- * CHANGE PASSWORD *
- ******************/
- $scope.changePassword = function(){
+  /********************
+ * GET ALL CATEGORIES *
+ **********************/
+ $scope.getCategories = function(){
 
-    //get values from the change password input fields
-    var id = localStorageService.get('id');
-    var current_password = $scope.curr_pass;
-    var new_password = $scope.new_pass;
-    var conf_new_password = $scope.conf_new_pass;
+  dataService.getCategories()
+  .then(
+    function(data){
 
-    //check for new password/confirmation mismatch
-    if(new_password !== conf_new_password){
-      $scope.message = 'The new passwords don\'t match!';
-      $scope.successMessage = false;
-      $scope.errorMessage = true;
+      //initialize an empty array to store results from the database
+      var categories = [];
+
+      //for each category in the result
+      for (var x in data){
+
+      //create an object and set object properties (i.e. categories data)
+      var tmp = new Object();
+      tmp.id = data[x].id;
+      tmp.name = data[x].name;
+
+      //store results in categories
+      categories.push(tmp);
     }
 
-    //otherwise send request to backend
-    else{
+    //update value in view for use in ng-repeat (to populate)
+    $scope.categories = categories;
+    
+  },
+  function(error){
+    console.log('Error: ' + error);
+  });};
 
-      //calling change function in data service
-      dataService.changePassword(id, current_password, new_password)
-      .then(
+  /******************
+ * ADD NEW CATEGORY *
+ *******************/ 
+ $scope.addCategory = function(new_cat){
 
-        //http post request succeeded 
-        function(data){
+  //get values from input fields
+  var category = new_cat;
 
-          //check for successful update and notify user accordingly
-          if(data['Updated'] === true){
-            $scope.message = 'Your password was successfully updated!';
-            $scope.errorMessage = false;
-            $scope.successMessage = true;
-          }
-          else{
-            //current password was incorrect
-            $scope.message = 'Invalid credentials. Please try again.';
-            $scope.successMessage = false;
-            $scope.errorMessage = true;
-          }
-        },
-        //http post request failed
-        function(error){
-          console.log('Error: ' + error);
-        });}};
-    }]);
+  dataService.addCategory(category)
+  .then(
+    function(data){
+      //check for successful add and notify user accordingly
+      if(data['Added'] === true){
 
-// $scope.updateTable = function(username){
-//   dataService.getUser(username)
-//   .then(
-//     function(data){
-//       if(data['Username'] === null){
-//         $scope.officers = $filter('filter')($scope.officers, {username: data['Username']});
-//       }else{
-//         //add user to the list of officers in the view
-//         var tmp = new Object();
-//         tmp.id = data['userID'];
-//         tmp.firstName = data['First_Name'];
-//         tmp.lastName = data['Last_Name'];
-//         tmp.username = data['Username'];
-//         tmp.role = data['Role'];
-//         $scope.officers.push(tmp);
-//       }
-//     }, 
-//     function(error){
-//       console.log('Error: ' + error);
-//     });
-// };
+        $scope.message = 'Category successfully added!';
+        $scope.errorMessage = false;
+        $scope.successMessage = true;
+        
+        //clear input fields
+        $scope.new_category = '';
+        
+        //update edit users table to reflect the addition of new user (this can be improved; only get new users instead of all)
+        $scope.getCategories();
+      }
+      else{
+        //the add was unsucessful
+        $scope.message = 'Could not add category!';
+        $scope.successMessage = false;
+        $scope.errorMessage = true;  
+      }
+    },
+    function(error){
+      console.log('Error: ' + error);
+    });};
 
+  /*******************
+ * EDIT CATEGORY MODAL *
+ ******************/
+ $scope.editCategory = function(update_id, update_name){
+  $scope.updateID = update_id; 
+  $scope.updateName = update_name; 
+  $('#editModal').modal();
+ };
+
+ /******************
+ * DELETE CATEGORY *
+ ******************/
+ $scope.deleteCategory = function(){};
+
+/************************
+ * UPDATE CATEGORY DATA *
+ ***********************/
+ $scope.updateCategory = function(){
+
+  var id = $scope.updateID; 
+  var name = $scope.updateName;
+
+  dataService.updateCategory(id, name)
+  .then(
+    function(data){
+
+      if(data['Updated'] === true){
+        $scope.updateMessage = 'Category successfully updated!';
+        $scope.updateErrorMessage = false;
+        $scope.updateSuccessMessage = true;
+        $scope.getCategories();
+      }
+      else{
+        $scope.updateMessage = 'Could not update category!';
+        $scope.updateSuccessMessage = false;
+        $scope.updateErrorMessage = true;  
+      }
+    },
+    function(error){
+      console.log('Error: ' + error);
+    });
+};
+
+}]);

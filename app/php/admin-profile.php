@@ -21,11 +21,12 @@
   <script src='../../app/vendor/angular-cookies.min.js'></script>
   <script src='../../app/vendor/angular-local-storage.min.js'></script>
   <script src='../../app/app.js' type='text/javascript'></script>
+  <script src='../../app/controllers/shared-ctrl.js' type='text/javascript'></script>
   <script src='../../app/controllers/admin-ctrl.js' type='text/javascript'></script>
   <script src='../../app/services/data-service.js' type='text/javascript'></script>
 
 </head>
-<body ng-controller ='adminCtrl'>
+<body ng-controller ='adminCtrl' ng-controller ='sharedCtrl'>
 
   <!-- Vertical Navigation -->
   <nav class='navbar navbar-inverse'>
@@ -46,7 +47,7 @@
         </ul>
         <ul class='nav navbar-nav navbar-right'>
           <li class='dropdown'>
-            <a href='#' class='dropdown-toggle' data-toggle='dropdown'>{{name}} <b class='caret'></b></a>
+            <a class='dropdown-toggle' data-toggle='dropdown'>{{name}} <b class='caret'></b></a>
             <ul class='dropdown-menu'>
               <li>
                 <a href='#password'><span class='glyphicon glyphicon-cog'></span> Change Password</a>
@@ -72,10 +73,11 @@
           <li class='a'><a href='#reporting'>Reporting</a></li>
         </ul>
       </div>
-      
+      <div class='col-sm-10'>
       <!-- content will change according to route -->
       <section ng-view></section>
-
+        
+      </div>
     </div>
   </div>
 </body>
