@@ -1,10 +1,14 @@
 var sharedModule = angular.module('shared', ['admin', 'supervisor', 'login']);
 var loginModule = angular.module('login', ['ngCookies', 'LocalStorageModule']);
-var adminModule = angular.module('admin', ['ngRoute', 'ngCookies', 'LocalStorageModule', 'shared']);
-var supervisorModule = angular.module('supervisor', ['ngRoute', 'ngCookies', 'LocalStorageModule','shared']);
+var adminModule = angular.module('admin', ['ngRoute', 'ngCookies', 'LocalStorageModule', 'shared', 'flow', 'ui.bootstrap']);
+var supervisorModule = angular.module('supervisor', ['ngRoute', 'ngCookies', 'LocalStorageModule', 'shared', 'ui.bootstrap']);
 
 adminModule.config(function($routeProvider){
 	$routeProvider
+	.when('/categories', {
+		templateUrl: '../../views/partials/category-management.html',
+		controller: 'adminCtrl'
+	})
 	.when('/settings', {
 		templateUrl: '../../views/partials/site-settings.html',
 		controller: 'adminCtrl'

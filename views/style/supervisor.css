@@ -1,13 +1,3 @@
-   body {
-
-   }
-   /* Default link styling */
-   a:link { color:#0271fb; }
-   a:visited { color:#bd02fb; }
-   a:hover, a:focus { color:#000; }
-   a:active { color:#fb0e02; }
-
-
 /* ---------------------------------------------------------
    Author's styles
    ---------------------------------------------------------*/
@@ -49,6 +39,19 @@
     margin: 4px 2px;
     cursor: pointer;
     width: 15%;
+  }
+  
+  .editbutton {
+    background-color: #222222; 
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
   }
   
   th {

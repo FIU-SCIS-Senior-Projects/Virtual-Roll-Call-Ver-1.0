@@ -2,56 +2,56 @@
 	<h3>User Management</h3>
 	<hr>
 
+  <!-- success/error message -->
+  <div uib-alert ng-repeat="a in alert.alerts" ng-class="'alert-' + a.type" close="alert.closeAlert($index)">{{a.msg}}</div>
+
 	<!-- Add User Panel -->
 	<div class='panel panel-primary'>
 		<div class='panel-heading'>Add User</div>
 		<div class='panel-body'>
-			<div>
+			<!-- Add User Form -->
+			<form ng-submit='addUser()'>
+				<label>First Name</label>
+				<br>
+				<input type='text' ng-model='fName' required>
+				<br>
+				<br>
+				<label>Last Name</label>
+				<br>
+				<input type='text' ng-model='lName' required>
+				<br>
+				<br>
+				<label>Username</label>
+				<br>
+				<input type='text' ng-model='username' required>
+				<br>
+				<br>
+				<label>Password</label>
+				<br>
+				<!-- TO DO: Validate password pattern in controller as well -->
+				<input type='password' ng-model='password' pattern='^[a-zA-Z0-9]{8,}$' title='Must contain at least 8 or more characters. Only alphanumeric characters allowed.' required>
+				<br>
+				<br>
+				<label>Role</label><br>
+				<select ng-model='role'>
+					<option value='Officer'>Officer</option>
+					<option value='Supervisor'>Supervisor</option>
+					<option value='Administrator'>Administrator</option>
+				</select>
+				<br>
+				<br>
+				<button type='submit' class='btn btn-primary'>Add User</button>
+				<br>
+				<br>
 
-				<!-- Add User Form -->
-				<form ng-submit='addUser()'>
-					<label>First Name</label>
-					<br>
-					<input type='text' ng-model='fName' required>
-					<br>
-					<br>
-					<label>Last Name</label>
-					<br>
-					<input type='text' ng-model='lName' required>
-					<br>
-					<br>
-					<label>Username</label>
-					<br>
-					<input type='text' ng-model='username' required>
-					<br>
-					<br>
-					<label>Password</label>
-					<br>
-					<!-- TO DO: Validate password pattern in controller as well -->
-					<input type='password' ng-model='password' pattern='^[a-zA-Z0-9]{8,}$' title='Must contain at least 8 or more characters. Only alphanumeric characters allowed.' required>
-					<br>
-					<br>
-					<label>Role</label><br>
-					<select ng-model='role'>
-						<option value='Officer'>Officer</option>
-						<option value='Supervisor'>Supervisor</option>
-						<option value='Administrator'>Administrator</option>
-					</select>
-					<br>
-					<br>
-					<button type='submit' class='btn btn-success'>Add User</button>
-					<br>
-					<br>
-
-					<!-- display message accordingly -->
-					<div class='alert alert-danger' ng-show='errorMessage' style='margin-bottom: 0'>
-						{{message}}
-					</div>
-					<div class='alert alert-success' ng-show='successMessage' style='margin-bottom: 0'>
-						{{message}}
-					</div>
-				</form>
-			</div>
+				<!-- display message accordingly -->
+				<div class='alert alert-danger' ng-show='errorMessage' style='margin-bottom: 0'>
+					{{message}}
+				</div>
+				<div class='alert alert-success' ng-show='successMessage' style='margin-bottom: 0'>
+					{{message}}
+				</div>
+			</form>
 		</div>
 	</div>
 
@@ -133,12 +133,6 @@
 						<!-- TO DO: Don't show successful update message when no changes were made to the user -->
 						<button type="submit" class="btn btn-success btn-block">Update</button>
 						<br>
-						<div class='alert alert-danger' ng-show='updateErrorMessage'>
-							{{updateMessage}}
-						</div>
-						<div class='alert alert-success' ng-show='updateSuccessMessage'>
-							{{updateMessage}}
-						</div>
 					</form>
 				</div>
 			</div>

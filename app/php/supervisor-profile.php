@@ -16,14 +16,17 @@
   <!-- SCRIPTS -->
   <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
   <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
-  <script src='../../app/vendor/angular.min.js'></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+  
   <script src='../../app/vendor/angular-route.min.js'></script>
   <script src='../../app/vendor/angular-cookies.min.js'></script>
   <script src='../../app/vendor/angular-local-storage.min.js'></script>
+  <script src='../../app/vendor/ui-bootstrap-tpls-2.2.0.min.js'></script>
   <script src='../../app/app.js' type='text/javascript'></script>
   <script src='../../app/controllers/shared-ctrl.js' type='text/javascript'></script>
   <script src='../../app/controllers/supervisor-ctrl.js' type='text/javascript'></script>
   <script src='../../app/services/data-service.js' type='text/javascript'></script>
+  <script src="../../app/vendor/ng-flow/dist/ng-flow-standalone.min.js"></script>
 
 </head>
 <body ng-controller = 'supervisorCtrl' ng-controller = 'sharedCtrl'>

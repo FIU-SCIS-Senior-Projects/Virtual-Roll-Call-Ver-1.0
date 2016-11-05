@@ -1,9 +1,29 @@
 sharedModule.controller('sharedCtrl', ['$scope', 'sharedService', 'localStorageService', '$window', function($scope, sharedService, localStorageService, $window){
 
- /******************
- * CHANGE PASSWORD *
- ******************/
- $scope.changePassword = function(){
+  var self = this;
+
+  /***** GLOBALS *****/
+  $scope.password_pattern = '^[a-zA-Z0-9]{8,}$';
+  $scope.pattern_descr = 'Must contain at least 8 or more characters. Only alphanumeric characters allowed.';
+
+  /***** ALERT FUNCTIONS *****/
+
+  //alert functions (displays accordingly in views)
+  self.alert = {
+    alerts: [], 
+    addAlert: function(type, msg){
+      $scope.alert.alerts.push({type: type, msg: msg});
+    },
+    closeAlert: function(index){
+      $scope.alert.alerts.splice(index, 1);
+    },
+    closeAll: function(){
+      $scope.alert.alerts = [];
+    }
+  };
+
+  /***** CHANGE PASSWORD *****/
+  $scope.changePassword = function(){
 
     //get values from the change password input fields
     var id = localStorageService.get('id');
@@ -13,37 +33,107 @@ sharedModule.controller('sharedCtrl', ['$scope', 'sharedService', 'localStorageS
 
     //check for new password/confirmation mismatch
     if(new_password !== conf_new_password){
-      $scope.message = 'The new passwords don\'t match!';
-      $scope.successMessage = false;
-      $scope.errorMessage = true;
-    }
-
-    //otherwise send request to backend
-    else{
-
-      //calling change function in data service
-      sharedService.changePassword(id, current_password, new_password)
+      $scope.alert.closeAll();
+      $scope.alert.addAlert('danger', "The new passwords don\'t match!");
+    }else{
+      dataService.changePassword(id, current_password, new_password)
       .then(
-
-        //http post request succeeded 
         function(data){
 
           //check for successful update and notify user accordingly
           if(data['Updated'] === true){
-            $scope.message = 'Your password was successfully updated!';
-            $scope.errorMessage = false;
-            $scope.successMessage = true;
+            $scope.alert.closeAll();
+            $scope.alert.addAlert('success', 'Your password was successfully updated!');
+            $scope.curr_pass = $scope.new_pass = $scope.conf_new_pass = '';
           }
           else{
             //current password was incorrect
-            $scope.message = 'Invalid credentials. Please try again.';
-            $scope.successMessage = false;
-            $scope.errorMessage = true;
+            $scope.alert.closeAll();
+            $scope.alert.addAlert('danger', 'Invalid credentials. Please try again.');
+            $scope.curr_pass = $scope.new_pass = $scope.conf_new_pass = '';
           }
         },
         //http post request failed
         function(error){
           console.log('Error: ' + error);
-        });}};  
+        });}};
+
+ /***** GET ALL USERS *****/
+ self.getOfficers = function(){
+  sharedService.getOfficers()
+  .then(
+    function(data){
+      //initialize an empty array to store results from the database
+      var officers = [];
+      //for each officer in the result
+      for (var x in data){
+      //create an object and set object properties (i.e. officer data)
+      var tmp = new Object();
+      tmp.id = data[x].id;
+      tmp.firstName = data[x].firstName;
+      tmp.lastName = data[x].lastName;
+      tmp.username = data[x].username;
+      tmp.role = data[x].role;
+      //store results in officers
+      officers.push(tmp);
+    }
+    //update value in view for use in ng-repeat (to populate)
+    $scope.officers = officers;
+  },
+  function(error){
+    console.log('Error: ' + error);
+  });};
+
+ /***** GET ALL CATEGORIES *****/
+ self.getCategories = function(){
+  sharedService.getCategories()
+  .then(
+    function(data){
+      //initialize an empty array to store results from the database
+      var categories = [];
+      //for each category in the result
+      for (var x in data){
+      //create an object and set object properties (i.e. categories data)
+      var tmp = new Object();
+      tmp.id = data[x].id;
+      tmp.name = data[x].name;
+      //store results in categories
+      categories.push(tmp);
+    }
+    //update value in view for use in ng-repeat (to populate)
+    $scope.categories = categories;
+  },
+  function(error){
+    console.log('Error: ' + error);
+  });};
+
+  /***** GET ALL DOCUMENTS *****/
+  self.getDocuments = function(){
+  sharedService.getDocuments()
+  .then(
+    function(data){
+      //initialize an empty array to store results from the database
+      var documents = [];
+      //for each category in the result
+      for (var x in data){
+      //create an object and set object properties (i.e. documents data)
+      var tmp = new Object();
+      tmp.id = data[x].id;
+      tmp.name = data[x].name;
+      tmp.cat_name = data[x].cat_name;
+      tmp.date = data[x].date;
+      tmp.pinned = data[x].pinned;
+      tmp.uploadedBy = data[x].uploadedBy;
+      //store results in categories
+      documents.push(tmp);
+    }
+    //update value in view for use in ng-repeat (to populate)
+    $scope.documents = documents;
+  },
+  function(error){
+    console.log('Error: ' + error);
+  });};
+
+  return self;
 
 }]);

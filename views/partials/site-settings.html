@@ -1,114 +1,52 @@
-<div class='col-sm-8 text-left'> 
-	<h3>Application Settings</h3>
+<div class='col-sm-8 text-left' flow-init="{target: '../../app/php/upload.php', testChunks:false}" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]" flow-file-success="alert.addAlert('success', 'Logo successfully updated!');"> 
+	<h3>Site Settings</h3>
 	<hr>
 
-	<!-- Global Application Settings Panel -->
+	<!-- success/error message -->
+  <div uib-alert ng-repeat="a in alert.alerts" ng-class="'alert-' + a.type" close="alert.closeAlert($index)">{{a.msg}}</div>
+
+	<!-- UPDATE SITE LOGO PANEL -->
 	<div class='panel panel-primary'>
-		<div class='panel-heading'>Site Customizations</div>
+		<div class='panel-heading'>Site Logo</div>
 		<div class='panel-body'>
-			<div>
+      <!-- Image Preview -->
+      <div class="container" style="padding: 0;">
+        <div class="thumbnail" ng-hide="$flow.files.length">
+          <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
+        </div>
+        <div ng-show="$flow.files.length">
+          <img id='logo-preview' flow-img="$flow.files[0]" />
+        </div>
+      </div>
+      <p>Only PNG,GIF,JPG files allowed.</p>
+      <button class="btn btn-primary" ng-hide="$flow.files.length" flow-btn flow-attrs="{accept:'image/*'}">Select image</button>
+      <button href="#" class="btn btn-danger" ng-show="$flow.files.length"
+      ng-click="$flow.cancel()">
+      Remove</button>
+      <button href="#" class="btn btn-success" ng-show="$flow.files.length"
+      ng-click="$flow.upload()">
+      Save</button>
+    </div>
+  </div>
 
-				<!-- Site Customizations Form -->
-				<form ng-submit='updateSettings()'>
-				<div class="form-group">
-					<label>Application Name</label>
-					<br>
-					<input class='col-xs-6' type='text' ng-model='app_name' placeholder='Ex. Virtual Roll Call'>
-					<br>
-					<br>
-					<label>Police Department Name</label>
-					<br>
-					<input class='col-xs-6' type='text' ng-model='dept_name' placeholder='Ex. Pinecrest Police Department'>
-					<br>
-					<br>
-					<label>Site Logo</label>
-					<br>
-					<input type='file' ng-model='site_logo'>
-					<br>
-					<button type='submit' class='btn btn-success'>Submit</button>
-					<br>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-
-	<!-- Edit Categories Panel -->
-	<div class='panel panel-primary' ng-init='getCategories()'>
-		<div class='panel-heading'>Document Categories</div>
-
-
-		<!-- TO DO: Overflow not detected until page reloads -->
-		<div class='panel-body' style="height:550px; overflow-y:scroll">
-			<div>
-				<!-- display message accordingly -->
-				<div class='alert alert-danger' ng-show='errorMessage' style='margin-bottom: 0'>
-					{{message}}
-				</div>
-				<div class='alert alert-success' ng-show='successMessage' style='margin-bottom: 0'>
-					{{message}}
-				</div>
-				<br>
-				<form ng-submit='addCategory(new_category)' class="form-inline">
-					<div class="form-group">
-						<label>Category</label>
-						<input type="text" ng-model="new_category" class="form-control">
-					</div>
-					<button type="submit" class="btn btn-primary">Add</button>
-				</form>
-				<table class='table table-hover table-bordered' style='margin:auto; width:100%'>
-					<br>
-					<thead>
-						<tr>
-							<th></th>
-							<th>Category Name</th>
-							<th class="text-center">Edit</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat='category in categories'>
-							<td class='text-center'>{{$index + 1}}</td>
-							<td>{{category.name}}</td>
-							<td class='text-center'><button class="editbutton" ng-click='editCategory(category.id, category.name)'><span class="glyphicon glyphicon-edit"></span> Edit</button></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
-	
-	<!-- Edit User Modal -->
-	<div class="modal fade" id="editModal" role="dialog">
-		<div class="modal-dialog">
-			
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header" style="padding:15px 15px;">
-					<button type="button" class="close" data-dismiss="modal" ng-click='updateErrorMessage = updateSuccessMessage = false'>&times;</button>
-					<h4><span class="glyphicon glyphicon-pencil"></span> Edit Category</h4>
-				</div>
-				<div class="modal-body" style="padding:40px 50px;">
-					<button ng-click='removeCategory()' class="btn btn-danger pull-right"><span class="glyphicon glyphicon-remove"></span> Delete</button>
-					<br>
-					<br>
-					<form role="form" ng-submit='updateCategory()'>
-						<div class="form-group">
-							<label>Name</label>
-							<input type="text" class="form-control" ng-model='updateName' required>
-						</div>
-						<br>
-						<!-- TO DO: Don't show successful update message when no changes were made to the user -->
-						<button type="submit" class="btn btn-success btn-block">Update</button>
-						<br>
-						<div class='alert alert-danger' ng-show='updateErrorMessage'>
-							{{updateMessage}}
-						</div>
-						<div class='alert alert-success' ng-show='updateSuccessMessage'>
-							{{updateMessage}}
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div> 	
+  <!-- SETTINGS PANEL -->
+	<div class='panel panel-primary'>
+		<div class='panel-heading'>Site Names</div>
+		<div class='panel-body'>
+			<!-- Site Customizations Form -->
+			<form ng-submit='updateSettings()'>
+        <label>Application Name</label>
+        <br>
+        <input class='col-xs-6' type='text' ng-model='app_name' placeholder='Ex. Virtual Roll Call'>
+        <br>
+        <br>
+        <label>Police Department Name</label>
+        <br>
+        <input class='col-xs-6' type='text' ng-model='dept_name' placeholder='Ex. Pinecrest Police Department'>
+        <br>
+        <br>
+        <button type="submit" class="btn btn-primary">Save Settings</button>
+      </form>
+    </div>
+  </div>
 </div>
