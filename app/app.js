@@ -1,7 +1,8 @@
-var sharedModule = angular.module('shared', ['admin', 'supervisor', 'login']);
-var loginModule = angular.module('login', ['ngCookies', 'LocalStorageModule']);
-var adminModule = angular.module('admin', ['ngRoute', 'ngCookies', 'LocalStorageModule', 'shared', 'flow', 'ui.bootstrap']);
-var supervisorModule = angular.module('supervisor', ['ngRoute', 'ngCookies', 'LocalStorageModule', 'shared', 'ui.bootstrap']);
+var sharedModule = angular.module('shared', ['admin', 'supervisor', 'officer', 'login']);
+var loginModule = angular.module('login', ['LocalStorageModule']);
+var adminModule = angular.module('admin', ['ngRoute', 'LocalStorageModule', 'shared', 'flow', 'ui.bootstrap']);
+var supervisorModule = angular.module('supervisor', ['ngRoute', 'LocalStorageModule', 'shared', 'ui.bootstrap']);
+var officerModule = angular.module('officer', ['ngRoute', 'LocalStorageModule', 'shared', 'ui.bootstrap']);
 
 adminModule.config(function($routeProvider){
 	$routeProvider
@@ -46,5 +47,19 @@ supervisorModule.config(function($routeProvider){
 	})
 	.otherwise({
 		redirectTo: '/upload'
+	});
+});
+
+officerModule.config(function($routeProvider){
+	$routeProvider
+	.when('/categories', {
+		templateUrl: '../../views/partials/view-categories.html',
+		controller: 'officerCtrl'
+	})
+	.when('/documents', {
+		templateUrl: '../../views/partials/view-documents.html'
+	})
+	.otherwise({
+		redirectTo: '/categories'
 	});
 });

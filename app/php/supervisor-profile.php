@@ -19,7 +19,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
   
   <script src='../../app/vendor/angular-route.min.js'></script>
-  <script src='../../app/vendor/angular-cookies.min.js'></script>
   <script src='../../app/vendor/angular-local-storage.min.js'></script>
   <script src='../../app/vendor/ui-bootstrap-tpls-2.2.0.min.js'></script>
   <script src='../../app/app.js' type='text/javascript'></script>

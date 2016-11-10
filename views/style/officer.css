@@ -2,28 +2,44 @@
    Author's styles
    ---------------------------------------------------------*/
 
-.album {
-  min-height: 50rem; /* Can be removed; just added for demo purposes */
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-  background-color: #f7f7f7;
-}
+  .navbar {
+    border-radius: 0;
+  }   
 
-.card {
-  float: left;
-  width: 33.333%;
-  padding: .75rem;
-  margin-bottom: 2rem;
-  border: 0;
-}
+  a, a:hover{
+    color: #FFFFFF;
+    text-decoration: none;
+  }
 
-.card > img {
-  margin-bottom: .75rem;
-}
 
-.card-text {
-  font-size: 85%;
-}
+  .cat-holder {
+    position: relative;
+    display: inline-block;
+    margin: 1.5em;
+    width:100%;
+    height:200px;
+    background-color: #337AB7;
+    margin: 1em;
+    box-shadow: 7px 7px 5px #888888;
+    transition: all .1s ease-in-out;
+  }
+
+  .cat-holder:hover { 
+    transform: scale(1.05);
+  }
+
+  .cat-name {
+    position: absolute;
+    text-align: right;
+    bottom: 0;
+    width: 100%;
+    height: 75px;
+    padding-right: 15px;
+    padding-top: 20px;
+    color: #FFFFFF;
+    font-size: 1.5em;
+    background-color: #295a82;
+  }
 
 /* ---------------------------------------------------------
    Print styles
