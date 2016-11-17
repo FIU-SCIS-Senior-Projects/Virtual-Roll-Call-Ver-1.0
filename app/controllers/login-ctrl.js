@@ -1,6 +1,17 @@
 //CONTROLLER for login
-loginModule.controller('loginCtrl', ['$scope', 'localStorageService', 'dataService', '$window', function($scope, localStorageService, dataService, $window) {
+loginModule.controller('loginCtrl', ['$scope', 'localStorageService', 'dataService', '$window', '$controller', function($scope, localStorageService, dataService, $window, $controller) {
+  
+  /***** SHARED FUNCTIONS *****/
+  var sharedCtrl = $controller('sharedCtrl', {$scope: $scope});
 
+  /***** ALERT FUNCTIONS *****/
+  //alert functions (displays accordingly in views)
+  $scope.alert = sharedCtrl.alert;
+
+  $scope.getSiteNames = function(){
+    sharedCtrl.getSiteNames();
+  };
+  
   //when login button is clicked...
   $scope.login = function(){
 
@@ -23,16 +34,16 @@ loginModule.controller('loginCtrl', ['$scope', 'localStorageService', 'dataServi
 
                //route to home page according to role
                if(data['Role'] === 'Administrator'){
-                $window.location.href = '../app/php/admin-profile.php';
+                $window.location.href = 'admin-profile.html';
                }else if (data['Role'] === 'Supervisor'){
-                $window.location.href = '../app/php/supervisor-profile.php';
+                $window.location.href = 'supervisor-profile.html';
                }else{
-                $window.location.href = '../app/php/officer-profile.php';
+                $window.location.href = 'officer-profile.html';
                }
              }else{
                 //invalid credentials...notify user
-                $scope.message = 'Invalid credentials. Please try again.';
-                $scope.errorMessage = true;
+                $scope.alert.closeAll();
+                $scope.alert.addAlert('danger', "Invalid credentials. Please try again.");
               }
             },
           //http post request failed

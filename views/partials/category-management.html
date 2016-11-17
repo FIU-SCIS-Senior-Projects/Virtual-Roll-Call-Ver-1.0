@@ -3,40 +3,45 @@
 	<hr>
 
 	<!-- success/error message -->
-  <div uib-alert ng-repeat="a in alert.alerts" ng-class="'alert-' + a.type" close="alert.closeAlert($index)">{{a.msg}}</div>
+	<div uib-alert ng-repeat="a in alert.alerts" ng-class="'alert-' + a.type" close="alert.closeAlert($index)">{{a.msg}}</div>
 
-  <!-- ADD CATEGORY PANEL -->
-  <div class='panel panel-primary'>
-    <div class='panel-heading'>Add Category</div>
-    <div class='panel-body'>
-      <form ng-submit='addCategory(new_category)'>
-        <label>Category</label>
-        <input type="text" ng-model="new_category" class="form-control" required>
-        <br>
-        <button type="submit" class="btn btn-primary">Add</button>
-      </form>
-    </div>
-  </div>
+	<!-- ADD CATEGORY PANEL -->
+	<div class='panel panel-primary'>
+		<div class='panel-heading'>Add Category</div>
+		<div class='panel-body'>
+			<form ng-submit='addCategory(new_category)'>
+				<label>Category</label>
+				<input type="text" ng-model="new_category" class="form-control" required>
+				<br>
+				<button type="submit" class="btn btn-success">Add</button>
+			</form>
+		</div>
+	</div>
 
-  <!-- EDIT CATEGORY PANEL -->
+	<!-- EDIT CATEGORY PANEL -->
 	<div class='panel panel-primary' ng-init='getCategories()'>
 		<div class='panel-heading'>Edit Categories</div>
 		<!-- TO DO: Overflow not detected until page reloads -->
-		<div class='panel-body'>
-			<table class='table table-hover table-bordered' style='margin:auto; width:100%'>
-				<br>
+		<div class='panel-body' style="height:300px; overflow-y:scroll">
+			<table class="table table-striped table-hover" style='margin:auto; width:100%'>
+				<form class="form-inline">
+					<div class="form-group">
+						<label>Search</label>
+						<input type="text" ng-model="search" class="form-control" placeholder="Search">
+					</div>
+				</form>    
 				<thead>
 					<tr>
-						<th></th>
+						<th class="text-center">#</th>
 						<th>Category Name</th>
 						<th class="text-center">Edit</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat='c in categories'>
+					<tr ng-repeat='c in categories|filter:search'>
 						<td class='text-center'>{{$index + 1}}</td>
 						<td>{{c.name}}</td>
-						<td class='text-center'><button class="editbutton" ng-click='editCategory(c.id, c.name)'><span class="glyphicon glyphicon-edit"></span> Edit</button></td>
+						<td class='text-center'><button class="btn-default" ng-click='editCategory(c.id, c.name)'><span class="glyphicon glyphicon-edit"></span> Edit</button></td>
 					</tr>
 				</tbody>
 			</table>
@@ -77,4 +82,4 @@
 			</div>
 		</div>
 	</div> 	
-	</div>
+</div>

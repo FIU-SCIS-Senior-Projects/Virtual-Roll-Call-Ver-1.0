@@ -1,4 +1,4 @@
-sharedModule.controller('sharedCtrl', ['$scope', 'sharedService', 'localStorageService', '$window', function($scope, sharedService, localStorageService, $window){
+sharedModule.controller('sharedCtrl', ['$scope', 'sharedService', 'localStorageService', '$window', '$location', function($scope, sharedService, localStorageService, $window, $location){
 
   var self = this;
 
@@ -21,9 +21,21 @@ sharedModule.controller('sharedCtrl', ['$scope', 'sharedService', 'localStorageS
       $scope.alert.alerts = [];
     }
   };
+  
+  /***** GET APP NAME *****/
+  self.getSiteNames = function(){
+    sharedService.getSiteNames()
+    .then(
+      function(data){
+        $scope.app_name = data['app_name'];
+        $scope.dept_name = data['dept_name'];
+      },
+      function(error){
+        console.log('Error: ' + error);
+      });};
 
-  /***** CHANGE PASSWORD *****/
-  $scope.changePassword = function(){
+    /***** CHANGE PASSWORD *****/
+    $scope.changePassword = function(){
 
     //get values from the change password input fields
     var id = localStorageService.get('id');
@@ -36,7 +48,7 @@ sharedModule.controller('sharedCtrl', ['$scope', 'sharedService', 'localStorageS
       $scope.alert.closeAll();
       $scope.alert.addAlert('danger', "The new passwords don\'t match!");
     }else{
-      dataService.changePassword(id, current_password, new_password)
+      sharedService.changePassword(id, current_password, new_password)
       .then(
         function(data){
 
@@ -58,11 +70,11 @@ sharedModule.controller('sharedCtrl', ['$scope', 'sharedService', 'localStorageS
           console.log('Error: ' + error);
         });}};
 
- /***** GET ALL USERS *****/
- self.getOfficers = function(){
-  sharedService.getOfficers()
-  .then(
-    function(data){
+      /***** GET ALL USERS *****/
+      self.getOfficers = function(){
+        sharedService.getOfficers()
+        .then(
+          function(data){
       //initialize an empty array to store results from the database
       var officers = [];
       //for each officer in the result
@@ -84,11 +96,11 @@ sharedModule.controller('sharedCtrl', ['$scope', 'sharedService', 'localStorageS
     console.log('Error: ' + error);
   });};
 
- /***** GET ALL CATEGORIES *****/
- self.getCategories = function(){
-  sharedService.getCategories()
-  .then(
-    function(data){
+        /***** GET ALL CATEGORIES *****/
+        self.getCategories = function(){
+          sharedService.getCategories()
+          .then(
+            function(data){
       //initialize an empty array to store results from the database
       var categories = [];
       //for each category in the result
@@ -107,11 +119,11 @@ sharedModule.controller('sharedCtrl', ['$scope', 'sharedService', 'localStorageS
     console.log('Error: ' + error);
   });};
 
-  /***** GET ALL DOCUMENTS *****/
-  self.getDocuments = function(){
-  sharedService.getDocuments()
-  .then(
-    function(data){
+          /***** GET ALL DOCUMENTS *****/
+          self.getDocuments = function(){
+            sharedService.getDocuments()
+            .then(
+              function(data){
       //initialize an empty array to store results from the database
       var documents = [];
       //for each category in the result
@@ -134,6 +146,6 @@ sharedModule.controller('sharedCtrl', ['$scope', 'sharedService', 'localStorageS
     console.log('Error: ' + error);
   });};
 
-  return self;
+            return self;
 
-}]);
+          }]);
