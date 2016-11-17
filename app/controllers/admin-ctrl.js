@@ -1,5 +1,5 @@
 //CONTROLLER for admin app
-adminModule.controller('adminCtrl', ['$scope', 'dataService', 'localStorageService', '$window', '$controller', function($scope, dataService, localStorageService, $window, $controller){
+adminModule.controller('adminCtrl', ['$scope', 'dataService', 'localStorageService', '$window', '$controller', '$location', function($scope, dataService, localStorageService, $window, $controller, $location){
 
 /***** GLOBALS *****/
 //get name from local storage for user profile customization
@@ -9,6 +9,10 @@ $scope.name = fname + ' ' + lname;
 
 /***** SHARED FUNCTIONS *****/
 var sharedCtrl = $controller('sharedCtrl', {$scope: $scope});
+
+$scope.getSiteNames = function(){
+  sharedCtrl.getSiteNames();
+};
 
 $scope.getOfficers = function(){
   sharedCtrl.getOfficers();
@@ -21,7 +25,14 @@ $scope.getCategories = function(){
 //alert functions (displays accordingly in views)
 $scope.alert = sharedCtrl.alert;
 
+
 /***** ADMINISTRATOR FUNCTIONS *****/
+
+/***** APPLY ACTIVE BS CLASS *****/
+$scope.isActive = function(path) {
+  return $location.path() === path; //TO DO: Pull this function into shared ctrl
+};
+
 /***** ADD NEW USER *****/ 
 $scope.addUser = function(){
 
@@ -196,4 +207,45 @@ dataService.addUser(first_name, last_name, username, password, role)
       console.log('Error: ' + error);
     });
   };
+
+  /***** UPDATE APP NAME *****/
+  $scope.updateAppName = function(name){
+  dataService.updateAppName(name)
+  .then(
+    function(data){
+      if(data['Updated'] === true){
+        $scope.alert.closeAll();
+        $scope.alert.addAlert('success', 'Application name successfully updated!');
+        $scope.application_name = '';
+      }
+      else{
+        $scope.alert.closeAll();
+        $scope.alert.addAlert('danger', 'Could not update application name!');
+      }
+    },
+    function(error){
+      console.log('Error: ' + error);
+    });
+  };
+
+  /***** UPDATE DEPT NAME *****/
+  $scope.updateDeptName = function(name){
+  dataService.updateDeptName(name)
+  .then(
+    function(data){
+      if(data['Updated'] === true){
+        $scope.alert.closeAll();
+        $scope.alert.addAlert('success', 'Department name successfully updated!');
+        $scope.department_name = '';
+      }
+      else{
+        $scope.alert.closeAll();
+        $scope.alert.addAlert('danger', 'Could not update department name!');
+      }
+    },
+    function(error){
+      console.log('Error: ' + error);
+    });
+  };
+
 }]);

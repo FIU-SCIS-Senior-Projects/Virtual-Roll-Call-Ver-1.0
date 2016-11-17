@@ -54,7 +54,7 @@
     cursor: pointer;
   }
   
-  th {
+/*  th {
     background-color: #4CAF50;
     color: white;
   }
@@ -63,10 +63,14 @@
     text-align: left;
     padding: 8px;
     border: 1px solid black
-  }
+  }*/
 
-  .table > tbody > tr > td {
+ .table > tbody > tr > td {
    vertical-align: middle;
+ }
+
+ input[type="password"] {
+  color: #222222;
  }
  
  ul.a {

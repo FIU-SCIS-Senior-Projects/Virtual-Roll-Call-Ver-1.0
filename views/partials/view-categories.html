@@ -4,9 +4,11 @@
     <hr>
     <div class="row">
       <div class="cat col-lg-4" ng-repeat='c in categories'>
-        <div class='cat-holder'>
-          <div class='cat-name'><a ng-click='viewDocuments(c.name)' href=#/documents>{{c.name}}</a></div>
-        </div>
+        <a href='#/documents/{{c.name}}'>
+          <div class='cat-holder'>
+            <div class='cat-name'>{{c.name}}</div>
+          </div>
+        </a>
       </div>
     </div>
   </div>

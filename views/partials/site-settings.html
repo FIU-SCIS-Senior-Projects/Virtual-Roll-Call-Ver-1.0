@@ -1,4 +1,4 @@
-<div class='col-sm-8 text-left' flow-init="{target: '../../app/php/upload.php', testChunks:false}" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]" flow-file-success="alert.addAlert('success', 'Logo successfully updated!');"> 
+<div class='col-sm-8 text-left' flow-init="{target: '../app/php/upload.php', testChunks:false}" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]" flow-file-success="alert.addAlert('success', 'Logo successfully updated!');"> 
 	<h3>Site Settings</h3>
 	<hr>
 
@@ -29,23 +29,34 @@
     </div>
   </div>
 
-  <!-- SETTINGS PANEL -->
+  <!-- APP NAME PANEL -->
 	<div class='panel panel-primary'>
-		<div class='panel-heading'>Site Names</div>
+		<div class='panel-heading'>Application Name</div>
 		<div class='panel-body'>
 			<!-- Site Customizations Form -->
-			<form ng-submit='updateSettings()'>
+			<form ng-submit='updateAppName(application_name)'>
         <label>Application Name</label>
         <br>
-        <input class='col-xs-6' type='text' ng-model='app_name' placeholder='Ex. Virtual Roll Call'>
+        <input class='col-xs-6' type='text' ng-model='application_name' required>
         <br>
         <br>
+        <button type="submit" class="btn btn-success">Update</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- DEPT NAME PANEL -->
+  <div class='panel panel-primary'>
+    <div class='panel-heading'>Department Name</div>
+    <div class='panel-body'>
+      <!-- Site Customizations Form -->
+      <form ng-submit='updateDeptName(department_name)'>
         <label>Police Department Name</label>
         <br>
-        <input class='col-xs-6' type='text' ng-model='dept_name' placeholder='Ex. Pinecrest Police Department'>
+        <input class='col-xs-6' type='text' ng-model='department_name' required>
         <br>
         <br>
-        <button type="submit" class="btn btn-primary">Save Settings</button>
+        <button type="submit" class="btn btn-success">Update</button>
       </form>
     </div>
   </div>

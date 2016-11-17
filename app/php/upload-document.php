@@ -24,7 +24,7 @@ move_uploaded_file($tmp_doc_name, $target_path);
 
 $connection = new DBHandler();
 
-$result = $connection->addDocument($new_name, $category_id, $upload_date, $pinned, $uploaded_by);
+$result = $connection->addDocument($new_name, $category_id, $upload_date, $pinned, $uploaded_by, $document_name);
 //convert the response to a json object
 //die(json_encode($result));
 //!!!!!IMPORTANT CHANGE TO RELEVANT URL !!!!!!

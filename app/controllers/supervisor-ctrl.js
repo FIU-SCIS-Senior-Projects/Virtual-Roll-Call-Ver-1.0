@@ -1,5 +1,5 @@
 //CONTROLLER for supervisor app
-supervisorModule.controller('supervisorCtrl', ['$scope', 'localStorageService', 'dataService', '$controller', function($scope, localStorageService, dataService, $controller){
+supervisorModule.controller('supervisorCtrl', ['$scope', 'localStorageService', 'dataService', '$controller', '$location', function($scope, localStorageService, dataService, $controller, $location){
   
   //TO DO: SAVE AS GLOBALS OR IN SHAREDCTRL
   /***** GLOBALS *****/
@@ -12,6 +12,10 @@ supervisorModule.controller('supervisorCtrl', ['$scope', 'localStorageService', 
 
   /***** SHARED FUNCTIONS *****/
   var sharedCtrl = $controller('sharedCtrl', {$scope: $scope});
+
+  $scope.getSiteNames = function(){
+    sharedCtrl.getSiteNames();
+  };
 
   $scope.getOfficers = function(){
     sharedCtrl.getOfficers();
@@ -30,6 +34,12 @@ supervisorModule.controller('supervisorCtrl', ['$scope', 'localStorageService', 
   $scope.alert = sharedCtrl.alert;
 
   /***** SUPERVISOR FUNCTIONS *****/
+
+  /***** APPLY ACTIVE BS CLASS *****/
+  $scope.isActive = function(path) {
+    return $location.path() === path; //TO DO: Pull this function into shared ctrl
+  };
+
   /***** GET SELECTED USER DATA *****/
   //TO DO: ENCAPSULATE THIS FUNCTIONALITY & UPDATE VIEW
   $scope.selected = {};
@@ -67,6 +77,7 @@ supervisorModule.controller('supervisorCtrl', ['$scope', 'localStorageService', 
     $scope.alert.addAlert('danger', "The new passwords don\'t match!");
     this.reset_pass = this.reset_pass_conf = '';
   }else{
+    this.reset_pass = this.reset_pass_conf = '';
   //call reset password function in data service
   dataService.resetPassword(id, reset_password, reset_password_conf)
     .then(
@@ -74,7 +85,6 @@ supervisorModule.controller('supervisorCtrl', ['$scope', 'localStorageService', 
       if(data['Updated'] === true){
         $scope.alert.closeAll();
         $scope.alert.addAlert('success', 'Officer password was successfully updated!');
-        this.reset_pass = this.reset_pass_conf = '';
       }
     },
       function(error){
