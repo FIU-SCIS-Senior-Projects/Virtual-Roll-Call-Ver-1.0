@@ -1,8 +1,4 @@
 <?php
-//Aids with debugging PHP: Need to remove in production environment
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 require_once('DBHandler.php');
 $document_name = $_FILES['document']['name'];
 $tmp_doc_name = $_FILES['document']['tmp_name'];

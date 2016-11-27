@@ -25,9 +25,7 @@ $scope.getCategories = function(){
 //alert functions (displays accordingly in views)
 $scope.alert = sharedCtrl.alert;
 
-
 /***** ADMINISTRATOR FUNCTIONS *****/
-
 /***** APPLY ACTIVE BS CLASS *****/
 $scope.isActive = function(path) {
   return $location.path() === path; //TO DO: Pull this function into shared ctrl
@@ -46,17 +44,15 @@ var role = $scope.role;
 dataService.addUser(first_name, last_name, username, password, role)
 .then(
   function(data){
-    //check for successful add and notify user accordingly
     if(data['Added'] === true){
       $scope.alert.closeAll();
       $scope.alert.addAlert('success', 'User successfully added!');
       //clear input fields
       $scope.fName = $scope.lName = $scope.username = $scope.password = $scope.role= '';
-      //update edit users table to reflect the addition of new user (this can be improved; only get new users instead of all)
+      //update edit users table to reflect the addition of new user (TO DO: this can be improved; only get new users instead of all)
       sharedCtrl.getOfficers();
     }
     else{
-      //the add was unsuccessful
       $scope.alert.closeAll();
       $scope.alert.addAlert('danger', 'Could not add user!');
     }
@@ -69,7 +65,6 @@ dataService.addUser(first_name, last_name, username, password, role)
   $scope.removeUser = function(){
   //when delete button selected, prompt user for confirmation
   var deleteUser = $window.confirm('Are you sure you want to delete this user?');
-  //if confirmed...
   if(deleteUser){
     var id = $scope.updateID;
     dataService.removeUser(id)
@@ -160,7 +155,7 @@ dataService.addUser(first_name, last_name, username, password, role)
 
   /***** REMOVE CATEGORY *****/
   $scope.removeCategory = function(){
- //when delete button selected, prompt user for confirmation
+  //when delete button selected, prompt user for confirmation
   var deleteCategory = $window.confirm('Are you sure you want to delete this category?');
   //if confirmed...
   if(deleteCategory){

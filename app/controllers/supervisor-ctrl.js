@@ -48,7 +48,7 @@ supervisorModule.controller('supervisorCtrl', ['$scope', 'localStorageService', 
     $scope.pick = index;
   };
 
-  // TO DO: Clear input fields if another row is selected
+  //TO DO: Clear input fields if another row is selected
   
   //helper for ng-class
   $scope.is_selected = function(index){

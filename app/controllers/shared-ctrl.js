@@ -7,7 +7,6 @@ sharedModule.controller('sharedCtrl', ['$scope', 'sharedService', 'localStorageS
   $scope.pattern_descr = 'Must contain at least 8 or more characters. Only alphanumeric characters allowed.';
 
   /***** ALERT FUNCTIONS *****/
-
   //alert functions (displays accordingly in views)
   self.alert = {
     alerts: [], 
@@ -70,25 +69,24 @@ sharedModule.controller('sharedCtrl', ['$scope', 'sharedService', 'localStorageS
           console.log('Error: ' + error);
         });}};
 
-      /***** GET ALL USERS *****/
-      self.getOfficers = function(){
-        sharedService.getOfficers()
-        .then(
-          function(data){
-      //initialize an empty array to store results from the database
-      var officers = [];
-      //for each officer in the result
-      for (var x in data){
-      //create an object and set object properties (i.e. officer data)
-      var tmp = new Object();
-      tmp.id = data[x].id;
-      tmp.firstName = data[x].firstName;
-      tmp.lastName = data[x].lastName;
-      tmp.username = data[x].username;
-      tmp.role = data[x].role;
-      //store results in officers
-      officers.push(tmp);
-    }
+  /***** GET ALL USERS *****/
+  self.getOfficers = function(){
+    sharedService.getOfficers()
+    .then(
+      function(data){
+  //initialize an empty array to store results from the database
+  var officers = [];
+  //for each officer in the result
+  for (var x in data){
+  //create an object and set object properties (i.e. officer data)
+  var tmp = new Object();
+  tmp.id = data[x].id;
+  tmp.firstName = data[x].firstName;
+  tmp.lastName = data[x].lastName;
+  tmp.username = data[x].username;
+  tmp.role = data[x].role;
+  //store results in officers
+  officers.push(tmp);}
     //update value in view for use in ng-repeat (to populate)
     $scope.officers = officers;
   },
@@ -96,27 +94,27 @@ sharedModule.controller('sharedCtrl', ['$scope', 'sharedService', 'localStorageS
     console.log('Error: ' + error);
   });};
 
-        /***** GET ALL CATEGORIES *****/
-        self.getCategories = function(){
-          sharedService.getCategories()
-          .then(
-            function(data){
-      //initialize an empty array to store results from the database
-      var categories = [];
-      //for each category in the result
-      for (var x in data){
-      //create an object and set object properties (i.e. categories data)
-      var tmp = new Object();
-      tmp.id = data[x].id;
-      tmp.name = data[x].name;
-      //store results in categories
-      categories.push(tmp);
-    }
-    //update value in view for use in ng-repeat (to populate)
-    $scope.categories = categories;
+  /***** GET ALL CATEGORIES *****/
+  self.getCategories = function(){
+    sharedService.getCategories()
+    .then(
+      function(data){
+  //initialize an empty array to store results from the database
+  var categories = [];
+  //for each category in the result
+  for (var x in data){
+  //create an object and set object properties (i.e. categories data)
+  var tmp = new Object();
+  tmp.id = data[x].id;
+  tmp.name = data[x].name;
+  //store results in categories
+  categories.push(tmp);
+  }
+  //update value in view for use in ng-repeat (to populate)
+  $scope.categories = categories;
   },
   function(error){
-    console.log('Error: ' + error);
+  console.log('Error: ' + error);
   });};
 
           /***** GET ALL DOCUMENTS *****/
