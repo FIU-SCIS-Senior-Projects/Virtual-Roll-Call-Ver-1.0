@@ -10,14 +10,17 @@ $scope.name = fname + ' ' + lname;
 /***** SHARED FUNCTIONS *****/
 var sharedCtrl = $controller('sharedCtrl', {$scope: $scope});
 
+/***** GET SITE NAME *****/
 $scope.getSiteNames = function(){
   sharedCtrl.getSiteNames();
 };
 
+/***** GET ALL OFFCIERS *****/
 $scope.getOfficers = function(){
   sharedCtrl.getOfficers();
 };
 
+/***** GET DOCUMENT CATEGORIES ****/
 $scope.getCategories = function(){
   sharedCtrl.getCategories();
 };
